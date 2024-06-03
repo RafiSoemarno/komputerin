@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Add "forwardPorts": ["5656"] to **devcontainer.json** to forward EdgeDB locally.
+  # (Adding the "ports" property to this file will not forward from a Codespace.)
+  edgedb:
+    image: edgedb/edgedb:latest
+    restart: unless-stopped
+    volumes:
+      - edgedb-data:/var/lib/edgedb/data
+      - ./dbschema:/dbschema
+    environment:
+      - EDGEDB_SERVER_ADMIN_UI=enabled
+      - EDGEDB_SERVER_SECURITY=insecure_dev_mode
+      - &pwd EDGEDB_SERVER_PASSWORD=secret
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:edgedb
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+    environment:
+      # this is purely for user reference, it's not used by the app
+      - EDGEDB_PORT=5656
+      - EDGEDB_CLIENT_SECURITY=insecure_dev_mode
+      # Use the same password as the database container.
+      - *pwd
+
+volumes:
+  edgedb-data:
