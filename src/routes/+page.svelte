@@ -48,7 +48,7 @@
 	}
 
 	div {
-		@apply mt-5 p-4 w-1/2 max-h-[60%] rounded-xl bg-gray-100 bg-opacity-30 text-center;
+		@apply mt-5 p-4 w-1/2 max-h-[60%] overflow-y-scroll rounded-xl bg-gray-100 bg-opacity-30 text-center;
 	}
 
 	section {
