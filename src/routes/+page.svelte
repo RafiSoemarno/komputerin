@@ -13,35 +13,53 @@
 </script>
 
 <main>
-	<h1>Komputerin Demo App</h1>
+	<section id="chat">
+		<h1>Komputerin Demo App</h1>
+	
+		<div>
+			{@html message}
+		</div>
+	
+		<form method="post">
+			<input type="text" name="chat" placeholder="Type your message..." />
+		</form>
+	</section>
 
-	<div>
-		<section>{@html message}</section>
-	</div>
+	<!-- <section id="result">
 
-	<form method="post">
-		<input type="text" name="chat" placeholder="Type your message..." />
-	</form>
+	</section> -->
 </main>
 
 <style lang="postcss">
 	main {
-		@apply bg-gray-200 h-screen flex flex-col items-center place-content-center;
+		@apply bg-gray-200 h-screen grid grid-cols-3;
+	}
+
+	#chat {
+		@apply flex flex-col items-center col-span-3;
+	}
+
+	#result {
+		@apply bg-gray-300;
 	}
 
 	h1 {
-		@apply font-sans text-4xl;
+		@apply font-sans text-4xl absolute top-10;
 	}
 
 	div {
-		@apply mt-5 p-4 w-1/2 max-h-[50%] overflow-y-auto rounded-xl bg-gray-100;
+		@apply mt-5 p-4 w-1/2 max-h-[60%] rounded-xl bg-gray-100 bg-opacity-30 text-center;
 	}
 
 	section {
-		@apply font-sans text-xl;
+		@apply font-sans text-xl flex flex-col justify-center;
+	}
+
+	form {
+		@apply absolute bottom-10;
 	}
 
 	input {
-		@apply w-96 rounded-xl p-1 px-2 mt-5;
+		@apply w-96 h-10 rounded-xl py-1 px-3;
 	}
 </style>
